@@ -37,6 +37,11 @@ if build_core == "mbcwb":
         join(DefaultEnvironment().PioPlatform().get_package_dir(
             "framework-arduino-mbcwb"), "tools", "platformio-esp-build.py"))
 
+elif build_core == "arancino":
+    SConscript(
+        join(DefaultEnvironment().PioPlatform().get_package_dir(
+            "framework-arduinoespressif32-arancino"), "tools", "platformio-build.py"))
+
 elif "espidf" not in env.subst("$PIOFRAMEWORK"):
     SConscript(
         join(DefaultEnvironment().PioPlatform().get_package_dir(

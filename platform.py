@@ -53,7 +53,7 @@ class Espressif32Platform(PlatformBase):
         xtensa32_toolchain = "toolchain-xtensa32"
         xtensa32s2_toolchain = "toolchain-xtensa32s2"
         riscv_toolchain = "toolchain-riscv-esp"
-        if len(frameworks) == 1 and "arduino" in frameworks and build_core == "esp32":
+        if len(frameworks) == 1 and "arduino" in frameworks and build_core == "esp32" or build_core == "arancino":
             # Remove default toolchains so they won't conflict with upstream
             self.packages.pop(xtensa32_toolchain, None)
             self.packages.pop(xtensa32s2_toolchain, None)
@@ -122,6 +122,10 @@ class Espressif32Platform(PlatformBase):
             self.packages["framework-arduino-mbcwb"]["optional"] = False
             self.packages["tool-mbctool"]["type"] = "uploader"
             self.packages["tool-mbctool"]["optional"] = False
+        if "arduino" in frameworks and build_core == "arancino":
+            # Arancino core packages switch
+            self.packages["framework-arduinoespressif32"]["optional"] = True
+            self.packages["framework-arduinoespressif32-arancino"]["optional"] = False
 
         if set(("simba", "pumbaa")) & set(frameworks):
             # Legacy frameworks depend on previous toolchain packages
