@@ -51,7 +51,7 @@ class Espressif32Platform(PlatformBase):
             "board_build.core", board_config.get("build.core", "arduino")
         ).lower()
 
-        if len(frameworks) == 1 and "arduino" in frameworks and build_core == "esp32":
+        if len(frameworks) == 1 and "arduino" in frameworks and build_core == "esp32" or build_core == "arancino":
             # In case the upstream Arduino framework is specified in the configuration
             # file then we need to dynamically extract toolchain versions from the
             # Arduino index file. This feature can be disabled via a special option:
@@ -136,6 +136,10 @@ class Espressif32Platform(PlatformBase):
                 self.packages["framework-arduino-mbcwb"]["optional"] = False
                 self.packages["tool-mbctool"]["type"] = "uploader"
                 self.packages["tool-mbctool"]["optional"] = False
+            if "arduino" in frameworks and build_core == "arancino":
+                # Arancino core packages switch
+                self.packages["framework-arduinoespressif32"]["optional"] = True
+                self.packages["framework-arduinoespressif32-arancino"]["optional"] = False
 
         return PlatformBase.configure_default_packages(self, variables, targets)
 
