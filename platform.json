@@ -72,6 +72,12 @@
       "owner": "platformio",
       "version": "~3.20007.0"
     },
+    "framework-arduinoespressif32-arancino": {
+      "type": "framework",
+      "optional": true,
+      "owner": "smartme-io",
+      "version": "~1.0.0"
+    },
     "framework-arduino-mbcwb": {
       "type": "framework",
       "optional": true,
