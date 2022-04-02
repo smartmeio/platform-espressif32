@@ -62,10 +62,14 @@ class Espressif32Platform(PlatformBase):
                 ).lower()
                 == "yes"
             ):
-                package_version = self.packages["framework-arduinoespressif32"][
-                    "version"
-                ]
-
+                if build_core == "arancino":
+                    package_version = self.packages["framework-arduinoespressif32-arancino"][
+                        "version"
+                    ]
+                else:
+                    package_version = self.packages["framework-arduinoespressif32"][
+                        "version"
+                    ]
                 url_items = urllib.parse.urlparse(package_version)
                 # Only GitHub repositories support dynamic packages
                 if (
@@ -74,7 +78,7 @@ class Espressif32Platform(PlatformBase):
                     and url_items.path.endswith(".git")
                 ):
                     try:
-                        self.configure_upstream_arduino_packages(url_items)
+                        self.configure_upstream_arduino_packages(url_items, build_core)
                     except Exception as e:
                         sys.stderr.write(
                             "Error! Failed to extract upstream toolchain"
@@ -355,12 +359,19 @@ class Espressif32Platform(PlatformBase):
             self.packages[toolchain_package]["owner"] = "espressif"
             self.packages[toolchain_package]["type"] = "toolchain"
 
-    def configure_upstream_arduino_packages(self, url_items):
-        framework_index_file = os.path.join(
-            self.get_package_dir("framework-arduinoespressif32") or "",
-            "package",
-            "package_esp32_index.template.json",
-        )
+    def configure_upstream_arduino_packages(self, url_items, build_core):
+        if build_core == "arancino":
+            framework_index_file = os.path.join(
+                self.get_package_dir("framework-arduinoespressif32-arancino") or "",
+                "package",
+                "package_esp32_index.template.json",
+            )
+        else:
+            framework_index_file = os.path.join(
+                self.get_package_dir("framework-arduinoespressif32") or "",
+                "package",
+                "package_esp32_index.template.json",
+            )
 
         # Detect whether the remote is already cloned
         if os.path.isfile(framework_index_file) and os.path.isdir(
