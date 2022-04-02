@@ -99,7 +99,7 @@
       "type": "framework",
       "optional": true,
       "owner": "platformio",
-      "version": "https://github.com/espressif/arduino-esp32.git"
+      "version": "https://github.com/espressif/arduino-esp32.git#2.0.2"
     },
     "framework-arduinoespressif32-arancino": {
       "type": "framework",
