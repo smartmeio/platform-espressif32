@@ -88,7 +88,7 @@ class Espressif32Platform(PlatformBase):
                     and url_items.netloc.startswith("github")
                     and url_items.path.endswith(".git")
                 ):
-                    self.configure_upstream_arduino_packages(url_items)
+                    self.configure_upstream_arduino_packages(url_items, build_core)
         else:
             # Remove upstream packages
             self.packages.pop("toolchain-xtensa-esp32", None)
@@ -382,7 +382,7 @@ class Espressif32Platform(PlatformBase):
             self.packages[toolchain_package]["version"] = version
             self.packages[toolchain_package]["owner"] = "espressif"
 
-    def configure_upstream_arduino_packages(self, url_itmes):
+    def configure_upstream_arduino_packages(self, url_items, build_core):
         try:
             if build_core == "arancino":
                 framework_index_file = os.path.join(
@@ -402,7 +402,7 @@ class Espressif32Platform(PlatformBase):
             else:
                 print("Configuring from remote")
                 self.configure_arduino_toolchains(
-                    self.download_remote_package_index(url_itmes)
+                    self.download_remote_package_index(url_items)
                 )
         except Exception as e:
             sys.stderr.write(
