@@ -50,19 +50,19 @@
     "toolchain-xtensa-esp32": {
       "type": "toolchain",
       "owner": "espressif",
-      "version": "8.4.0+2021r1"
+      "version": "8.4.0+2021r2"
     },
     "toolchain-xtensa-esp32s2": {
       "type": "toolchain",
       "optional": true,
       "owner": "espressif",
-      "version": "8.4.0+2021r1"
+      "version": "8.4.0+2021r2"
     },
     "toolchain-riscv32-esp": {
       "type": "toolchain",
       "optional": true,
       "owner": "espressif",
-      "version": "8.4.0+2021r1"
+      "version": "8.4.0+2021r2"
     },
     "toolchain-xtensa32": {
       "type": "toolchain",
