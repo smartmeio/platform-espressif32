@@ -73,10 +73,14 @@ class Espressif32Platform(PlatformBase):
                 ).lower()
                 == "yes"
             ):
-                package_version = self.packages["framework-arduinoespressif32"][
-                    "version"
-                ]
-
+                if build_core == "arancino":
+                    package_version = self.packages["framework-arduinoespressif32-arancino"][
+                        "version"
+                    ]
+                else:
+                    package_version = self.packages["framework-arduinoespressif32"][
+                        "version"
+                    ]
                 url_items = urllib.parse.urlparse(package_version)
                 # Only GitHub repositories support dynamic packages
                 if (
@@ -380,11 +384,18 @@ class Espressif32Platform(PlatformBase):
 
     def configure_upstream_arduino_packages(self, url_itmes):
         try:
-            framework_index_file = os.path.join(
-                self.get_package_dir("framework-arduinoespressif32") or "",
-                "package",
-                "package_esp32_index.template.json",
-            )
+            if build_core == "arancino":
+                framework_index_file = os.path.join(
+                    self.get_package_dir("framework-arduinoespressif32-arancino") or "",
+                    "package",
+                    "package_esp32_index.template.json",
+                )
+            else:
+                framework_index_file = os.path.join(
+                    self.get_package_dir("framework-arduinoespressif32") or "",
+                    "package",
+                    "package_esp32_index.template.json",
+                )
             if os.path.isfile(framework_index_file):
                 with open(framework_index_file) as fp:
                     self.configure_arduino_toolchains(json.load(fp))
